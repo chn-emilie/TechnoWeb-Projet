@@ -35,7 +35,6 @@ export default class HistoryRow extends React.Component
                 match: response.data.info,
                 fetched: true
             });
-            console.log(this.state.match);
         })
         .catch((error) => {
             console.log(error);

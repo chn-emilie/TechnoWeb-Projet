@@ -50,8 +50,22 @@ p {
   width: 100%;
   max-width: 100px;
 }
-/*SUMMONER HISTORY*/
 
+/* LEAGUE BRIEF */
+.nav-link {
+  color: white;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: #007179;
+  color: white;
+}
+
+.nav-link:hover {
+  color: #007179;
+}
+
+/*SUMMONER HISTORY*/
 .historyContainer {
   margin-top: 1em;
   padding: 1em;

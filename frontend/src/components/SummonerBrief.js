@@ -64,8 +64,17 @@ export default class SummonerBrief extends React.Component{
             let league = leagues[i];
             if( league.queueType == "RANKED_TFT_PAIRS")
                 continue;
+            else if ( league.queueType == "RANKED_FLEX_SR" )
+            {
+                leagueNames.push("FLEX");
+            }
+            else
+            {
+                leagueNames.push("SOLO/DUO");
+            }
 
-            leagueTab[i] = <SummonerLeague leaguePoints={league.leaguePoints} losses={league.losses} queueType={league.queueType} />;
+            leagueTab.push( <SummonerLeague leaguePoints={league.leaguePoints} losses={league.losses} queueType={league.queueType} rank={league.rank} tier={league.tier} wins={league.wins}/> );
+            
         }
 
         return(
@@ -83,9 +92,9 @@ export default class SummonerBrief extends React.Component{
                 </Col>
             <Col>
             <Container className="sumBriefContainer">
-                <Tabs defaultActiveKey="league0" id="uncontrolled-tab-example" className="mb-3">
+                <Tabs defaultActiveKey="league0" id="uncontrolled-tab-example" className="mb-3 tabLink" variant="pills">
                 {leagueTab.map((leagueData, index) => 
-                    <Tab eventKey={`league${index}`} title={leagues[index]["queueType"]}>
+                    <Tab eventKey={`league${index}`} title={leagueNames[index]} >
                         {leagueData}
                     </Tab>
                  )}

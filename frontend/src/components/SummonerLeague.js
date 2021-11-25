@@ -1,6 +1,7 @@
 import React from 'react';
+import Image from 'react-bootstrap/Image';
 
-
+const ASSET_EMBLEM = "./assets/emblems/Emblem"
 export default class SummonerHistory extends React.Component{
 
     constructor(props)
@@ -12,7 +13,7 @@ export default class SummonerHistory extends React.Component{
             queueType: props.queueType,
             rank: props.rank,
             tier: props.tier,
-            wins: props.win,
+            wins: props.wins,
         };
     }
 
@@ -29,10 +30,15 @@ export default class SummonerHistory extends React.Component{
 
     render()
     {
-        console.log(this.state);
+        const league = this.state;
+        const EMBLEM_PATH = `${ASSET_EMBLEM}_Gold.png`;
+        console.log(EMBLEM_PATH);
+        console.log(league);
         return(
                  <p>
-                    {this.state.queueType}
+                    <Image className="navLogo" src={EMBLEM_PATH} />
+                    {league.tier} {league.rank}<br/>
+                    {league.wins}W/{league.losses}L
                 </p>
     
         );

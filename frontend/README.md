@@ -2,7 +2,17 @@
 
 **Arona KA - Julien FROIS - Emilie CHEN**
 
-Dashboard du jeu **League of Legends** (et Teamfight Tactics), inspiré par les plateformes [op.gg](https://euw.op.gg/) et [leagueofgraph](https://www.leagueofgraphs.com/)
+Dashboard du jeu **League of Legends** (et Teamfight Tactics), inspiré par les plateformes [op.gg](https://euw.op.gg/) et [league of graph](https://www.leagueofgraphs.com/)
+
+## Installation
+
+Installer tous les modules
+
+> `npm install`
+
+Lancer le serveur
+
+> `npm start`
 
 ## Documentation
 
