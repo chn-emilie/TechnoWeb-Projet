@@ -25,6 +25,7 @@ export default class SummonerHistory extends React.Component{
         {
             case "RANKED_SOLO_5x5": name = "SOLO/DUO"; break;
             case "RANKED_FLEX_SR": name = "FLEX"; break;
+            default: name = "UNRANKED";
         }
     }
 
@@ -32,13 +33,11 @@ export default class SummonerHistory extends React.Component{
     {
         const league = this.state;
         const EMBLEM_PATH = `${ASSET_EMBLEM}_Gold.png`;
-        console.log(EMBLEM_PATH);
-        console.log(league);
         return(
                  <p>
                     <Image className="navLogo" src={EMBLEM_PATH} />
-                    {league.tier} {league.rank}<br/>
-                    {league.wins}W/{league.losses}L
+                    {league.tier} {league.rank}&nbsp;-
+                    &nbsp;{league.wins}W/{league.losses}L
                 </p>
     
         );

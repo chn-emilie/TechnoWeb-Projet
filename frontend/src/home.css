@@ -37,6 +37,12 @@ p {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #007179;
   outline: 0 none;
 }
+/*SUMMONER NAV TABS*/
+.nav-tabs .nav-link {
+  border-radius: 0;
+  border: 0;
+}
+
 /* SUMMONER BRIEF */
 .sumBriefContainer {
   margin-top: 1em;
@@ -45,10 +51,11 @@ p {
   color: white;
   font-size: 1em;
   border-radius: 15px;
+  min-height: 150px;
+  max-height: 150px;
 }
 .sumBriefImg {
-  width: 100%;
-  max-width: 100px;
+  max-width: 100%;
 }
 
 /* LEAGUE BRIEF */
@@ -84,6 +91,10 @@ p {
 
 .victory {
   background-color: #223f25;
+}
+
+.TFTvictory {
+  background-color: #71723a;
 }
 
 .historyChampIcon {

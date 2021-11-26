@@ -20,6 +20,7 @@ export default class HistoryRow extends React.Component
         super(props);
         this.state = {
             fetched: false,
+            game: props.game,
             match_id: props.match_id,
             puuid: props.puuid,
             match: [],
@@ -28,8 +29,31 @@ export default class HistoryRow extends React.Component
 
     componentDidMount()
     {
+        if (this.state.game === "lol")
+            this.fetchMatch();
+        else
+            this.fetchMatchTFT();
+    }
+
+    fetchMatch()
+    {
         let api = new RiotAPI();
         api.fetchMatch(this.state.match_id)
+        .then((response) => {
+            this.setState({
+                match: response.data.info,
+                fetched: true
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
+    fetchMatchTFT()
+    {
+        let api = new RiotAPI();
+        api.fetchMatchTFT(this.state.match_id)
         .then((response) => {
             this.setState({
                 match: response.data.info,
@@ -100,11 +124,8 @@ export default class HistoryRow extends React.Component
         return totalKills;
     }
 
-    render()
-    {   
-        
-        if ( !this.state.fetched )
-            return null;
+    renderLOLRow()
+    {
         const match = this.state.match;
         const participantId = this.getParticipantId();
         const participant = match.participants[ participantId ];
@@ -149,6 +170,63 @@ export default class HistoryRow extends React.Component
                 </Row>
             </div>
         );
+    }
+
+    renderTFTRow()
+    {
+        const match = this.state.match;
+        const participantId = this.getParticipantId();
+        const participant = match.participants[ participantId ];
+        let historyContainer = "historyContainer ";
+        if ( participant.placement > 4)
+        {
+            historyContainer += "defeat";
+        }
+        else if ( participant.placement > 1)
+        {
+            historyContainer += "victory";
+        }
+        else
+        {
+            historyContainer += "TFTvictory"
+        }
+
+        return(
+            <div className={historyContainer}>
+                <Row>
+                    <Col xs={2}>
+                        <Row>
+                            <h1>{participant.placement}</h1>
+                        </Row>
+                        <Container className="d-flex p-2" >
+                            
+                        </Container>
+                    </Col>
+
+                    <Col>
+                        <Container className="d-flex flex-column">
+                            
+                        </Container>
+                    </Col>
+
+                    <Col>
+                       
+                    </Col>
+                </Row>
+            </div>
+        );
+    }
+    render()
+    {   
+        
+        if ( !this.state.fetched )
+            return null;
+
+        if ( this.state.game === "lol" )
+            return this.renderLOLRow();
+        
+        return this.renderTFTRow();
+        
     }
 }
         

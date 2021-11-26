@@ -10,15 +10,18 @@ export default class SummonerHistory extends React.Component{
     {
         super(props);
         this.state = {
+            game: props.game,
             puuid: props.puuid,
             matches_id:  []   
         };
-
     }
 
     componentDidMount()
     {
-       this.getMatchesHistory();
+        if (this.state.game === "lol")
+         this.getMatchesHistory();
+        else
+         this.getMatchesTFTHistory();
     }
        
     getMatchesHistory()
@@ -35,12 +38,27 @@ export default class SummonerHistory extends React.Component{
         });
     }
 
+    getMatchesTFTHistory()
+    {
+        const api = new RiotAPI();
+        api.fetchMatchesTFTHistory(this.state.puuid)
+        .then((response) => {
+            this.setState({
+                matches_id: response.data
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
     render(){
+     
         let historyRows = [];
       
         for( let i = 0; i < (this.state.matches_id.length-5); i++)
         {
-            historyRows[i] = <HistoryRow match_id={this.state.matches_id[i]} puuid={this.state.puuid} />
+            historyRows[i] = <HistoryRow match_id={this.state.matches_id[i]} puuid={this.state.puuid} game={this.state.game} />
         }
 
         return (
@@ -48,5 +66,6 @@ export default class SummonerHistory extends React.Component{
                 {historyRows.map( (row, index) => <div key={`row${index}`}> {row} </div>)}
             </div>
         );
+
     }
 }

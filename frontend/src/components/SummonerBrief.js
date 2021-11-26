@@ -16,6 +16,7 @@ export default class SummonerBrief extends React.Component{
         super(props);
 
         this.state = {
+            game: props.game,
             fetched: false,
             account: props.account,
             league:     []
@@ -30,10 +31,13 @@ export default class SummonerBrief extends React.Component{
     */
    componentDidMount()
    {
-    this.setLeague();
+    if( this.state.game === "lol")
+        this.setLeagueLOL();
+    else
+        this.setLeagueTFT();
    }
 
-    setLeague()
+    setLeagueLOL()
     {
         let api = new RiotAPI();
         api.fetchLeague(this.state.account.id)
@@ -48,19 +52,41 @@ export default class SummonerBrief extends React.Component{
         });
     }
 
+    setLeagueTFT()
+    {
+        let api = new RiotAPI();
+        api.fetchLeagueTFT(this.state.account.id)
+        .then((response) => {
+            this.setState({
+                fetched: true,
+                league: response.data
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
+
 
     render(){
         if (!this.state.fetched)
             return null;
-
         const summonerName = this.state.account["name"];
         const profileIcon = `${PROFILE_ICON_URL}/${this.state.account["profileIconId"]}.png`
         const leagues = this.state.league;
-
         let leagueTab = [];
         let leagueNames = [];
-        for(let i = 0; i < leagues.length; i++)
+        let unranked = null;
+        if( leagues.length === 0)
         {
+            unranked = <Tab eventKey={`league0`} key={`league0`} title={"UNRANKED"} >
+                        </Tab>;
+        }
+        else
+        {
+            for(let i = 0; i < leagues.length; i++)
+            {
             let league = leagues[i];
             if( league.queueType == "RANKED_TFT_PAIRS")
                 continue;
@@ -68,14 +94,19 @@ export default class SummonerBrief extends React.Component{
             {
                 leagueNames.push("FLEX");
             }
+            else if (league.queueType == "RANKED_TFT")
+            {
+                leagueNames.push("RANKED TFT")
+            }
             else
             {
                 leagueNames.push("SOLO/DUO");
             }
 
-            leagueTab.push( <SummonerLeague leaguePoints={league.leaguePoints} losses={league.losses} queueType={league.queueType} rank={league.rank} tier={league.tier} wins={league.wins}/> );
-            
+            leagueTab.push( <SummonerLeague leaguePoints={league.leaguePoints} losses={league.losses} queueType={league.queueType} rank={league.rank} tier={league.tier} wins={league.wins}/> ); 
+            }
         }
+        
 
         return(
             <div className="summonerBrief">
@@ -94,10 +125,11 @@ export default class SummonerBrief extends React.Component{
             <Container className="sumBriefContainer">
                 <Tabs defaultActiveKey="league0" id="uncontrolled-tab-example" className="mb-3 tabLink" variant="pills">
                 {leagueTab.map((leagueData, index) => 
-                    <Tab eventKey={`league${index}`} title={leagueNames[index]} >
-                        {leagueData}
+                    <Tab eventKey={`league${index}`} key={`league${index}`} title={leagueNames[index]} >
+                         {leagueData}
                     </Tab>
                  )}
+                 {unranked}
                 </Tabs> 
             </Container>
             </Col>
