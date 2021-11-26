@@ -56,7 +56,7 @@ export default class SummonerHistory extends React.Component{
      
         let historyRows = [];
       
-        for( let i = 0; i < (this.state.matches_id.length-5); i++)
+        for( let i = 0; i < (this.state.matches_id.length); i++)
         {
             historyRows[i] = <HistoryRow match_id={this.state.matches_id[i]} puuid={this.state.puuid} game={this.state.game} />
         }

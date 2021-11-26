@@ -39,7 +39,7 @@ export default class RiotAPI {
 
     fetchMatchesHistory(puuid){
 
-        const URL = `${API_MATCH_URL}/${API_MATCH}/by-puuid/${puuid}/ids?start=0&count=10&api_key=${API_KEY}`;
+        const URL = `${API_MATCH_URL}/${API_MATCH}/by-puuid/${puuid}/ids?start=0&count=8&api_key=${API_KEY}`;
         return axios
         .get(URL, config)
 
@@ -47,7 +47,7 @@ export default class RiotAPI {
 
     fetchMatchesTFTHistory(puuid){
 
-        const URL = `${API_MATCH_URL}/${API_TFT_MATCH}/by-puuid/${puuid}/ids?start=0&count=10&api_key=${API_KEY}`;
+        const URL = `${API_MATCH_URL}/${API_TFT_MATCH}/by-puuid/${puuid}/ids?start=0&count=8&api_key=${API_KEY}`;
         return axios
         .get(URL, config)
 
