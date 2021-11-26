@@ -28,8 +28,11 @@ p {
   width: 100%;
   max-width: 600px;
   margin: auto;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+}
+.lead {
+  margin-bottom: 4rem;
 }
 
 .sumControl:focus {

@@ -1,4 +1,4 @@
-# Ocres Legends
+# OMNES Legends
 
 **Arona KA - Julien FROIS - Emilie CHEN**
 
@@ -18,9 +18,7 @@ Lancer le serveur
 
 ### Fonctionnement
 
-Pour profiter de ce dashboard, il suffit de cliquer sur l'onglet _home_
-
-Et de renseigner un nom d'invocateur. Si vous n'en avez pas, en voici un :
+Pour profiter de ce dashboard, il suffit de cliquer sur l'onglet _home_ et de renseigner un nom d'invocateur. Si vous n'en avez pas, en voici un :
 
 > Keex
 

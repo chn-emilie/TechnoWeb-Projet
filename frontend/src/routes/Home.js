@@ -26,7 +26,7 @@ export default function Home() {
     return(
     <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <Image className="homeImg"src="./assets/logo_big.png"/><br/>
-            <p className="lead">ECE's finest players</p>
+            <p className="lead">finest players</p>
             <Form className="homeForm" onSubmit={handleSubmit}> 
             <Row >
                 <Col>
