@@ -10,12 +10,12 @@ export default function Navigation() {
     return(
         <div>
         <Navbar className="navigation" variant="dark">
-            <Link to="/" className="navLink">
+            <Link to="/home" className="navLink">
                 <Image className="navLogo" src="./assets/logo.png" />
             </Link>
             <Nav className="me-auto">
             <Link to="/home" className="navLink">Home</Link>     
-            <Link to="summoner" className="navLink">Summoner</Link>
+            <Link to="/leaderboard" className="navLink">OMNES Leaderboard</Link>
             </Nav>
         </Navbar>
         <Outlet />
