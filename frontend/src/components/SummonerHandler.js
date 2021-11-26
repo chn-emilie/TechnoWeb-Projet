@@ -1,5 +1,5 @@
 import React from 'react';
-import RiotAPI  from '../tools/RiotAPI';
+import RiotAPI from '../tools/RiotAPI';
 
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';

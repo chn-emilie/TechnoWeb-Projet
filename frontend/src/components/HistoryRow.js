@@ -8,6 +8,7 @@ import React from 'react';
 import RiotAPI from '../tools/RiotAPI';
 
 import summonerSpells from '../jsons/summonerspells.json';
+import Accordion from 'react-bootstrap/Accordion';
 
 //URLS
 const CHAMP_SQUARE_ASSET_URL = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion";
@@ -146,6 +147,7 @@ export default class HistoryRow extends React.Component
 
         return(
             <div className={historyContainer}>
+            <Accordion.Header>
                 <Row>
                     <Col xs={2}>
                         <Row>
@@ -168,6 +170,10 @@ export default class HistoryRow extends React.Component
                         {renderItemSet(items)}
                     </Col>
                 </Row>
+            </Accordion.Header>
+            <Accordion.Body>
+                test
+            </Accordion.Body>
             </div>
         );
     }

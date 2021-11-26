@@ -1,7 +1,7 @@
 import React from 'react';
-import RiotAPI  from '../tools/RiotAPI.js';
-import HistoryRow from './HistoryRow.js';
-
+import RiotAPI  from '../tools/RiotAPI';
+import HistoryRow from './HistoryRow';
+import Accordion from 'react-bootstrap/Accordion'
 
 
 
@@ -62,9 +62,9 @@ export default class SummonerHistory extends React.Component{
         }
 
         return (
-            <div>
-                {historyRows.map( (row, index) => <div key={`row${index}`}> {row} </div>)}
-            </div>
+            <Accordion>
+                {historyRows.map( (row, index) => <Accordion.Item className="historyRow" eventKey={`row${index}`} key={`row${index}`}> {row} </Accordion.Item>)}
+            </Accordion>
         );
 
     }
