@@ -9,6 +9,7 @@ import RiotAPI from '../tools/RiotAPI';
 
 import summonerSpells from '../jsons/summonerspells.json';
 import Accordion from 'react-bootstrap/Accordion';
+import SummonerDamageChart from './SummonerDamageChart';
 
 //URLS
 const CHAMP_SQUARE_ASSET_URL = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion";
@@ -143,6 +144,7 @@ export default class HistoryRow extends React.Component
         const KPraw = ((participant["kills"] + participant["assists"])/this.calculateKP(match.participants, participant["win"]))*100;
         const KP = `${Number(KPraw).toFixed(0)}`;
         
+        console.log(participant);
 
 
         return(
@@ -172,7 +174,23 @@ export default class HistoryRow extends React.Component
                 </Row>
             </Accordion.Header>
             <Accordion.Body>
-                test
+                <SummonerDamageChart
+                    total={participant["totalDamageDealt"]}
+                    tC={participant["totalDamageDealtToChampions"]}
+                    taken={participant["totalDamageTaken"]}
+
+                    pTotal={participant["physicalDamageDealt"]}
+                    ptC={participant["physicalDamageDealtToChampions"]}
+                    pTaken={participant["physicalDamageTaken"]}
+
+                    mTotal={participant["magicDamageDealt"]}
+                    mtC={participant["magicDamageDealtToChampions"]}
+                    mTaken={participant["magicDamageTaken"]}
+
+                    tTotal={participant["trueDamageDealt"]}
+                    ttC={participant["trueDamageDealtToChampions"]}
+                    tTaken={participant["trueDamageTaken"]}
+                />
             </Accordion.Body>
             </div>
         );
