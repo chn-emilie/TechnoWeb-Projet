@@ -11,7 +11,7 @@ export default function Navigation() {
         <div>
         <Navbar className="navigation" variant="dark">
             <Link to="/home" className="navLink">
-                <Image className="navLogo" src="./assets/logo.png" />
+                <Image className="navLogo" src="https://i.ibb.co/1rwv6N6/logo.png" />
             </Link>
             <Nav className="me-auto">
             <Link to="/home" className="navLink">Home</Link>     

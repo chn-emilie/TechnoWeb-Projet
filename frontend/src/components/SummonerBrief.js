@@ -72,40 +72,36 @@ export default class SummonerBrief extends React.Component{
     render(){
         if (!this.state.fetched)
             return null;
+
         const summonerName = this.state.account["name"];
         const profileIcon = `${PROFILE_ICON_URL}/${this.state.account["profileIconId"]}.png`
         const leagues = this.state.league;
         let leagueTab = [];
         let leagueNames = [];
-        let unranked = null;
-        if( leagues.length === 0)
+   
+        let unranked = (leagues.length === 0)?<Tab eventKey={`league0`} key={`league0`} title={"UNRANKED"} > </Tab>:null;
+                       
+        for(let i = 0; i < leagues.length; i++)
         {
-            unranked = <Tab eventKey={`league0`} key={`league0`} title={"UNRANKED"} >
-                        </Tab>;
+        let league = leagues[i];
+        if( league.queueType == "RANKED_TFT_PAIRS")
+            continue;
+        else if ( league.queueType == "RANKED_FLEX_SR" )
+        {
+            leagueNames.push("FLEX");
+        }
+        else if (league.queueType == "RANKED_TFT")
+        {
+            leagueNames.push("RANKED TFT");
         }
         else
         {
-            for(let i = 0; i < leagues.length; i++)
-            {
-            let league = leagues[i];
-            if( league.queueType == "RANKED_TFT_PAIRS")
-                continue;
-            else if ( league.queueType == "RANKED_FLEX_SR" )
-            {
-                leagueNames.push("FLEX");
-            }
-            else if (league.queueType == "RANKED_TFT")
-            {
-                leagueNames.push("RANKED TFT")
-            }
-            else
-            {
-                leagueNames.push("SOLO/DUO");
-            }
-
-            leagueTab.push( <SummonerLeague leaguePoints={league.leaguePoints} losses={league.losses} queueType={league.queueType} rank={league.rank} tier={league.tier} wins={league.wins}/> ); 
-            }
+            leagueNames.push("SOLO/DUO");
         }
+
+        leagueTab.push( <SummonerLeague leaguePoints={league.leaguePoints} losses={league.losses} queueType={league.queueType} rank={league.rank} tier={league.tier} wins={league.wins}/> ); 
+        }
+        
         
 
         return(
