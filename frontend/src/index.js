@@ -17,7 +17,9 @@ import './index.css';
 
 
 
-
+/*
+Handles project's routes
+*/
 const rootElement = document.getElementById("root");
 render(
     <BrowserRouter>

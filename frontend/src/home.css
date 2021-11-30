@@ -180,3 +180,8 @@ footer {
 .wip {
   color: white;
 }
+
+.container > h3,
+h5 {
+  color: white;
+}

@@ -7,8 +7,13 @@ import Tab from 'react-bootstrap/Tab';
 import SummonerBrief from '../components/SummonerBrief';
 import SummonerHistory from '../components/SummonerHistory';
 
+/*
+    Component that handles differents components which needs to be rendered on the SummonerPage
+*/
 export default class SummonerHandler extends React.Component{
+
     constructor(props){
+
         super(props);
         this.state = {
             error: false,
@@ -17,18 +22,20 @@ export default class SummonerHandler extends React.Component{
             name: props.summonerName,
             accountLOL: [],
             accountTFT: [],
-        };  
-        
-        console.log(this.state.name);
+        };        
     }
-    componentDidMount()
-    {
+
+    componentDidMount(){
         this.fetchaccountLOL();
         this.fetchaccountTFT();   
     }
 
-    fetchaccountLOL()
-    {
+    /*
+    Fetch and account by its Summoner Name
+    Update the state to render different components
+    */
+    fetchaccountLOL(){
+
         let api = new RiotAPI();
         api.fetchSummonerByName(this.state.name)
         .then((response) => {
@@ -46,8 +53,8 @@ export default class SummonerHandler extends React.Component{
         });
     }
 
-    fetchaccountTFT()
-    {
+    fetchaccountTFT(){
+
         let api = new RiotAPI();
         api.fetchTFTSummonerByName(this.state.name)
         .then((response) => {
@@ -67,8 +74,8 @@ export default class SummonerHandler extends React.Component{
 
 
 
-    render()
-    {
+    render(){
+        //If we didn't get the data from the api, we render nothing until we do
         if( !this.state.fetchedTFT || !this.state.fetchedLOL ) 
             return null;
 
@@ -77,7 +84,7 @@ export default class SummonerHandler extends React.Component{
             return <p>error</p>
 
         return (
-            <div>
+            <div className="summonerWrapper">
                 <Tabs defaultActiveKey="League of Legends" className="mb-3">
                     <Tab eventKey="League of Legends" title="League of Legends">
                         <SummonerBrief account={this.state.accountLOL} game={"lol"} /> 

@@ -1,15 +1,14 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-
 
 import { Outlet } from 'react-router';
 
-import { useNavigate } from 'react-router-dom';
 
+/*
+WIP
+This page will use our backend server and API to render 2 widgets
+*/
 
 
 export default function Home() {

@@ -8,7 +8,7 @@ import { Link, Outlet } from 'react-router-dom';
 export default function Navigation() {
 
     return(
-        <div>
+        <div className="main">
         <Navbar className="navigation" variant="dark">
             <Link to="/home" className="navLink">
                 <Image className="navLogo" src="https://i.ibb.co/1rwv6N6/logo.png" />

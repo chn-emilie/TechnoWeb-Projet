@@ -14,8 +14,12 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     let navigate = useNavigate();
-    function handleSubmit( event )
-    {
+    
+    /**handle the submission from the Home form
+     * Fetch the form's value and force navigation to the Summoner Page
+     * @param  {} event
+     */
+    function handleSubmit( event ){
         event.preventDefault();
         const value = event.target.elements.summonerName.value;
         if( value !== "") 
@@ -23,6 +27,7 @@ export default function Home() {
             navigate(`/Summoner/${value}`);
          }
     }
+    
     return(
     <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <Image className="homeImg"src="./assets/logo_big.png"/><br/>

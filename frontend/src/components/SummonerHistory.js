@@ -3,11 +3,9 @@ import RiotAPI  from '../tools/RiotAPI';
 import HistoryRow from './HistoryRow';
 import Accordion from 'react-bootstrap/Accordion'
 
-
-
 export default class SummonerHistory extends React.Component{
-    constructor(props)
-    {
+    constructor(props){
+
         super(props);
         this.state = {
             game: props.game,
@@ -16,16 +14,15 @@ export default class SummonerHistory extends React.Component{
         };
     }
 
-    componentDidMount()
-    {
+    componentDidMount(){
+
         if (this.state.game === "lol")
          this.getMatchesHistory();
         else
          this.getMatchesTFTHistory();
     }
        
-    getMatchesHistory()
-    {
+    getMatchesHistory(){
         const api = new RiotAPI();
         api.fetchMatchesHistory(this.state.puuid)
         .then((response) => {
@@ -38,8 +35,7 @@ export default class SummonerHistory extends React.Component{
         });
     }
 
-    getMatchesTFTHistory()
-    {
+    getMatchesTFTHistory(){
         const api = new RiotAPI();
         api.fetchMatchesTFTHistory(this.state.puuid)
         .then((response) => {
@@ -62,7 +58,7 @@ export default class SummonerHistory extends React.Component{
         }
 
         return (
-            <Accordion>
+            <Accordion className="historyContainer">
                 {historyRows.map( (row, index) => <Accordion.Item className="historyRow" eventKey={`row${index}`} key={`row${index}`}> {row} </Accordion.Item>)}
             </Accordion>
         );
