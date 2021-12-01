@@ -11,6 +11,8 @@ import summonerSpells from '../jsons/summonerspells.json';
 import Accordion from 'react-bootstrap/Accordion';
 import SummonerDamageChart from './SummonerDamageChart';
 
+import queue_list from '../jsons/queues.json';
+
 //URLS
 const CHAMP_SQUARE_ASSET_URL = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion";
 const SUMM_SPELL_ASSET_URL = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell";
@@ -126,6 +128,27 @@ export default class HistoryRow extends React.Component
         return totalKills;
     }
 
+    getQueueDescr(queueId){
+        let queueDescr = null;
+        for( let i = 0; i < queue_list.length; i++)
+        {
+            if ( queue_list[i].queueId === queueId){
+                queueDescr = queue_list[i].description;
+                //adapting to website
+                switch (queueDescr){
+                    case "5v5 Ranked Solo games": queueDescr = "Ranked SOLO/DUO"; break;
+                    case "5v5 Blind Pick games": queueDescr = "Blind"; break;
+                    case "5v5 Ranked Flex games": queueDescr = "Ranked FLEX"; break;
+                    case "5v5 ARAM games": queueDescr = "ARAM"; break;
+                    default: 
+                }
+                break;
+            }
+        }
+
+        return queueDescr;
+    }
+
     renderLOLRow()
     {
         const match = this.state.match;
@@ -144,12 +167,13 @@ export default class HistoryRow extends React.Component
         const KPraw = ((participant["kills"] + participant["assists"])/this.calculateKP(match.participants, participant["win"]))*100;
         const KP = `${Number(KPraw).toFixed(0)}`;
 
+        const descr = this.getQueueDescr(match.queueId);
 
 
         return(
             <div className={historyContainer}>
             <Accordion.Header>
-                <Row>
+                <Row className="align-items-center">
                     <Col xs={2}>
                         <Row>
                             <Image className="historyChampIcon" src={champIcon}/> 
@@ -161,9 +185,12 @@ export default class HistoryRow extends React.Component
                     </Col>
 
                     <Col>
-                        <Container className="d-flex flex-column">
+                        <Container className="d-flex flex-column text-center">
                             <h3>{KDA}</h3>
-                            <h5>{minionsKilled} CS - {KP}%kp</h5>
+                            <p>{minionsKilled} CS - {KP}%kp<br />
+                                {Math.round(participant.goldEarned/100)/10}K gold<br/>
+                                {descr}
+                            </p>
                         </Container>
                     </Col>
 

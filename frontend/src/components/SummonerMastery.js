@@ -7,7 +7,6 @@ import Container from 'react-bootstrap/Container';
 
 export default function SummonerMastery(props)
 {
-        console.log(props);
         return (
         <Col><Container className="sumBriefContainer sumMastery">        
             <Row>

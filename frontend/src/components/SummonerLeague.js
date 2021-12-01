@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
 import SummonerPie from './SummonerPie';
 
@@ -28,8 +29,9 @@ export default class SummonerHistory extends React.Component{
         return(        
             <Row>
                 <Col>
-                    <Image className="leagueImg" src={EMBLEM_PATH} /><br/><br/>
-                    <h5>{league.tier} {league.rank}</h5>
+                   <Row className="justify-content-center"> <Image className="leagueImg" src={EMBLEM_PATH} /> </Row>
+                    <Row style={{textAlign: 'center'}}><h5>{league.tier} {league.rank}</h5></Row>
+                    <Row style={{textAlign: 'center'}}><p>{league.leaguePoints} lp</p></Row>
                 </Col>
                 <Col>
                     <SummonerPie wins={league.wins} losses={league.losses}/>

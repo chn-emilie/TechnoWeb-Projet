@@ -173,6 +173,7 @@ export default class SummonerBrief extends React.Component{
         const masteryData = this.parseMasteryData()
         let sumHeaderStyle = null;
         let masteryComponent = null;
+        let containerStyle = "MLContainer restricted"
 
         if (masteryData !== null)
         {
@@ -188,9 +189,11 @@ export default class SummonerBrief extends React.Component{
                 mPoints : masteryData.championPoints.toLocaleString(),
             }
             
-            masteryComponent = <SummonerMastery champName ={champName} mIcon={values.mIcon} mLevel={values.mLevel} mPoints={values.mPoints} />
-            console.log(masteryComponent);
+            masteryComponent = <SummonerMastery champName ={champName} mIcon={values.mIcon} mLevel={values.mLevel} mPoints={values.mPoints} />;
+            containerStyle = "MLContainer";
         }
+
+
 
         return(
             <div className="summonerBrief">
@@ -204,7 +207,7 @@ export default class SummonerBrief extends React.Component{
                     </Col>
                 </Row>
             </Container>
-            <Container className="MLContainer">
+            <Container className={containerStyle}>
                 <Row className="align-items-center">
                     {masteryComponent}
                     <Col><Container className="sumBriefContainer">
