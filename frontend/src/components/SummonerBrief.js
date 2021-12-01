@@ -8,7 +8,7 @@ import Tab from 'react-bootstrap/Tab';
 
 import RiotAPI  from '../tools/RiotAPI';
 import SummonerLeague from './SummonerLeague';
-
+import SummonerMastery from './SummonerMastery';
 import champion_list from '../jsons/champion.json';
 
 const PROFILE_ICON_URL = 'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/profileicon';
@@ -172,10 +172,8 @@ export default class SummonerBrief extends React.Component{
 
         const masteryData = this.parseMasteryData()
         let sumHeaderStyle = null;
-        let champName = null;
-        let mLevel = null;
-        let mIcon = null;
-        let mPoints = null;
+        let masteryComponent = null;
+
         if (masteryData !== null)
         {
             const imgUrl = `${SPLASH_ART_URL}/${masteryData.name}_0.jpg`
@@ -183,11 +181,15 @@ export default class SummonerBrief extends React.Component{
                 backgroundImage: `url(${imgUrl})`,
                 backgroundPosition: 'center',
             }
-            champName = masteryData.name;
-            mLevel = masteryData.masteryLevel;
-            mIcon = `${CHAMP_SQUARE_ASSET_URL}/${champName}.png`;
-            mPoints = masteryData.championPoints.toLocaleString();
-            console.log(masteryData);
+            let  champName = masteryData.name;
+            let values = {
+                mLevel : masteryData.masteryLevel,
+                mIcon : `${CHAMP_SQUARE_ASSET_URL}/${champName}.png`,
+                mPoints : masteryData.championPoints.toLocaleString(),
+            }
+            
+            masteryComponent = <SummonerMastery champName ={champName} mIcon={values.mIcon} mLevel={values.mLevel} mPoints={values.mPoints} />
+            console.log(masteryComponent);
         }
 
         return(
@@ -195,28 +197,16 @@ export default class SummonerBrief extends React.Component{
             <Container className="sumBriefContainer" style={sumHeaderStyle}>
                 <Row>
                     <Col xs={2}><Image className="sumBriefImg" src={profileIcon} roundedCircle/></Col>
-                    <Col className="mt-5">
+                    <Col className="mt-5 sumHeaderText">
                         <h1>{ summonerName }</h1>
                         <h3> Level {this.state.account["summonerLevel"]}</h3>
+                        <hr></hr>
                     </Col>
                 </Row>
             </Container>
             <Container className="MLContainer">
-                <Row className="align-items-center"> 
-                    <Col><Container className="sumBriefContainer sumMastery">
-                    
-                        <Row>
-                            <Col className = "d-flex justify-content-center">
-                                <Image src={mIcon} />
-                            </Col>
-                            <Col>
-                                <Row><h1>{ champName }</h1></Row>
-                                <Row><h5> Mastery level: {mLevel}</h5></Row>
-                                <Row><p> {mPoints} mastery points</p></Row>
-                            </Col>
-                        </Row>
-                    
-                    </Container></Col>
+                <Row className="align-items-center">
+                    {masteryComponent}
                     <Col><Container className="sumBriefContainer">
                         <Tabs defaultActiveKey="league0" id="uncontrolled-tab-example" className="mb-3 tabLink" variant="pills">
                             {leagueTab.map((leagueData, index) => 
