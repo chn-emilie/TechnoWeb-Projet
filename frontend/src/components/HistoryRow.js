@@ -143,8 +143,7 @@ export default class HistoryRow extends React.Component
 
         const KPraw = ((participant["kills"] + participant["assists"])/this.calculateKP(match.participants, participant["win"]))*100;
         const KP = `${Number(KPraw).toFixed(0)}`;
-        
-        console.log(participant);
+
 
 
         return(

@@ -15,6 +15,8 @@ const API_TFT_MATCH = "tft/match/v1/matches"
 const API_LEAGUE = "lol/league/v4/entries";
 const API_TFT_LEAGUE = "tft/league/v1/entries";
 
+const API_MASTERY = "lol/champion-mastery/v4/champion-masteries/by-summoner";
+
 //Empty for now.. CORS disabled manually
 const config = {
     headers:{
@@ -99,6 +101,12 @@ export default class RiotAPI {
      */
     fetchMatchTFT(matchId){
         const URL = `${API_MATCH_URL}/${API_TFT_MATCH}/${matchId}?api_key=${API_KEY}`;
+        return axios
+        .get(URL, config)
+    }
+
+    fetchMastery(encryptedSummonerId){
+        const URL = `${API_URL}/${API_MASTERY}/${encryptedSummonerId}?api_key=${API_KEY}`;
         return axios
         .get(URL, config)
     }
