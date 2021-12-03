@@ -12,6 +12,7 @@ import App from "./App";
 import Home from "./routes/Home";
 import Summoner from "./routes/Summoner";
 import Leaderboard from "./routes/Leaderboard";
+import Test from "./routes/Test";
 
 import './index.css';
 
@@ -30,6 +31,7 @@ render(
             <Route path="summoner" element = {<Summoner />}>
              <Route path=":summonerName" element={<Summoner />} />
              </Route>
+             <Route path="test" element = {<Test />} />
         </Route>
         </Routes>
     </BrowserRouter>,

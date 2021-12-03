@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = "";
+const API_KEY = "RGAPI-9216cc40-e371-40a5-8a96-1a5cf1ef18c5";
 
 const API_URL = "https://euw1.api.riotgames.com";
 const API_MATCH_URL = "https://europe.api.riotgames.com";
