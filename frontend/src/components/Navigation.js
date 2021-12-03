@@ -16,7 +16,6 @@ export default function Navigation() {
             <Nav className="me-auto">
             <Link to="/home" className="navLink">Home</Link>     
             <Link to="/leaderboard" className="navLink">OMNES Leaderboard</Link>
-            <Link to="/test" className="navLink">Test API</Link>
             </Nav>
         </Navbar>
         <Outlet />
