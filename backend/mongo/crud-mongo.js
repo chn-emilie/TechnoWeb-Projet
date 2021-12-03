@@ -1,140 +1,81 @@
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 8080;
+const server = require('http').Server(app);
+
+const mongoDBModule = require('./mongo/crud-mongo');
+
+const bodyParser = require('body-parser');
+let multer = require('multer');
+let multerData = multer();
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+
+	next();
+});
+
+server.listen(port);
+console.log("Serveur lancé sur le port : " + port);
+
+// Ici des routes en :
+// http GET (pour récupérer des données)
+// http POST : pour insérer des données
+// http PUT pour modifier des données
+// http DELETE pour supprimer des données
 
 
-// Connection URL
-const url = 'mongodb://localhost:27017/leaderboard';
+app.get('/api/summoners', (req, res) => {
 
-// Database Name
-const dbName = 'leaderboard';
+	mongoDBModule.findSummoners()
+		.then(data => {
+			res.send(JSON.stringify(data));
+		});
+});
 
-exports.connexionMongo = async () => {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
+// Récupération d'un seul summoner par son id
+app.get('/api/summoner/:id', (req, res) => {
+	let id = req.params.id;
 
-	return db;
-}
+	mongoDBModule.findSummonerById(id)
+		.then(data => {
+			res.send(JSON.stringify(data));
+		});
+});
 
-exports.findSummonerById = async (id) => {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
-	let reponse;
+// Creation d'un summoner par envoi d'un formulaire
+app.post('/api/summoner', multerData.fields([]), (req, res) => {
 
-	try {
-		let myquery = { "_id": ObjectId(id) };
+	mongoDBModule.createSummoner(req.body)
+		.then(data => {
+			res.send(JSON.stringify(data));
+		});
+});
 
-		let data = await db.collection("summoner").findOne(myquery);
+// Modification d'un summoner, on fera l'update par une requête PUT
+app.put('/api/update/summoner/:id', multerData.fields([]), (req, res) => {
+	let id = req.params.id;
 
-		reponse = {
-			succes: true,
-			restaurant: data,
-			error: null,
-			msg: "Details du summoner envoyé"
-		};
-	} catch (err) {
-		reponse = {
-			succes: false,
-			restaurant: null,
-			error: err,
-			msg: "erreur lors du find"
-		};
-	} finally {
-		client.close();
-		return reponse;
-	}
-}
+	mongoDBModule.updateSummoner(id, req.body)
+		.then(data => {
+			res.send(JSON.stringify(data));
+		});
+});
 
-exports.createSummoner = async (formData) => {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
-	let reponse;
+// Suppression d'un restaurant
+// On fera la suppression par une requête DELETE
+app.delete('/api/summoner/:id', (req, res) => {
+	let id = req.params.id;
 
-	try {
-		let toInsert = {
-			name: formData.nom,
-			level: formData.lvl,
-            rank: formData.rank,
-            school: formData.school,
-		};
-		let data = await db.collection("summoner").insertOne(toInsert);
-		reponse = {
-			succes: true,
-			result: toInsert._id,
-			msg: "Ajout réussi " + toInsert._id
-		};
-	} catch (err) {
-		reponse = {
-			succes: false,
-			error: err,
-			msg: "erreur lors du insert"
-		};
-	} finally {
-		client.close();
-		return reponse;
-	}
-}
+	mongoDBModule.deleteSummoner(id)
+		.then(data => {
+			res.send(JSON.stringify(data));
+		});
+})
 
-exports.updateSummoner = async (id, formData) => {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
-	let reponse;
-
-	try {
-		let myquery = { "_id": ObjectId(id) };
-		let newvalues = {
-			$set: {
-				name: formData.nom,
-                level: formData.lvl,
-                rank: formData.rank,
-                school: formData.school,
-			}
-		};
-		let result = await db.collection("summoner").updateOne(myquery, newvalues);
-
-		reponse = {
-			succes: true,
-			result: result,
-			error: null,
-			msg: "Modification réussie " + result
-		};
-	} catch (err) {
-		reponse = {
-			succes: false,
-			error: err,
-			msg: "Problème à la modification"
-		};
-	} finally {
-		client.close();
-		return reponse;
-	}
-
-}
-
-exports.deleteSummoner = async function (id, callback) {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
-	let reponse;
-
-	try {
-		let myquery = { "_id": ObjectId(id) };
-
-		let result = await db.collection("summoner")
-			.deleteOne(myquery);
-		reponse = {
-			succes: true,
-			result: result,
-			error: null,
-			msg: "Suppression réussie " + result
-		};
-
-	} catch (err) {
-		reponse = {
-			succes: false,
-			error: err,
-			msg: "Problème à la suppression"
-		};
-	} finally {
-		client.close();
-		return reponse;
-	}
-}
